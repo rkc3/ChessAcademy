@@ -1,0 +1,49 @@
+:root {
+  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%; }
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  background-color: #C69835;
+  color: #000000; }
+  body.red-theme {
+    background-color: #FF0000;
+    color: #000000; }
+
+  body.blue-theme {
+      background-color: #0000FF;
+      color: #000000; }
+
+  body.orange-theme {
+        background-color: #FFA500;
+        color: #000000; }
+
+  body.yellow-theme {
+          background-color: #FFFF00;
+          color: #000000; }
+
+#red-btn {
+  font: inherit;
+  background-color: red;
+  color: white; }
+
+#blue-btn {
+  font: inherit;
+  background-color: blue;
+  color: white; }
+
+#orange-btn {
+  font: inherit;
+  background-color: orange;
+  color: white; }
+
+#yellow-btn {
+  font: inherit;
+  background-color: yellow;
+  color: black; }
