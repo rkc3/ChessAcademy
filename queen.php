@@ -1,6 +1,7 @@
 <?php
-require('db.php');
+
 include("auth.php");
+require('db.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,12 +9,9 @@ include("auth.php");
 <head>
 	<meta charset="utf-8">
 	<title> Chess Game </title>
-	 <link rel="stylesheet" href = "style2.css">
-		    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-
+					<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+ <link rel="stylesheet" href = "style2.css">
 	<style type="text/css">
-
-	
 	#coins{
     	height: 113px;
     	    width: 110px;
@@ -45,11 +43,26 @@ include("auth.php");
     	    border-radius: 5px;
     	}
     
+    	
+    	h2{
+    	        display: inline;
+    	    }
+    	    
+    	    #tutor{
+    	        width: 70%;
+    	    }
+
+    h3 {
+            text-align: left;
+    }
+	
 	h1{
 		text-align: center;
 		color: #000000;
-		margin-top: 0;
 		}
+	h2{
+        text-align: right;
+	}
 		html,
  body{
 			width: 100%;
@@ -364,17 +377,24 @@ from{
     margin-right: 12%;
     margin-top: 10%;
 }
-
+#<p>{
+    
+    float: right;
+    height: 300px;
+    padding-right:10%;
+    margin-right: 12%;
+    margin-top: 10%;
+}
 #game{
     
-    float: left;
-    padding-left:12%; 
+    
     padding-right:15px; 
     padding-top:20px;
+    margin: 20px auto;
 }
 
-#tutorial, #shop, #logout, #quit{
-    background:LightSteelBlue;
+#tutorial, #shop, #logout{
+    background:white;
 	border-radius:17px;
 	cursor:pointer;
 	color:white;
@@ -396,26 +416,102 @@ from{
 #logout:hover{
         background:#FF6863;
 }
-a{
-    text-decoration: none;
-    display: block;
+a {
+  text-decoration: none;
+  font-size: 150%;
+}
+.reward{
+    background:LightSteelBlue;
+    width: 350px;
+	border-radius:17px;
+	cursor:pointer;
+	color:white;
+	font-family:serif;
+	padding:6px 80px;
+	margin: 15px auto;
+	text-decoration: none;
+	text-shadow:0px -1px 0px #2f6627;
+	
+}
+.para{
+    width: 60%;
+    margin: 0 auto;
+    width: 400px;
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 15px;
+    
 }
 	
 	</style>
+
 </head>
-<body <?php
-session_start();
-    if(isset($_GET['colour']))
-    {
-        $colour = $_GET['colour'];
-        $_SESSION['colour']= $colour;
-    }
-    @$colour_session = $_SESSION['colour'];
-    
-    echo "bgcolor=$colour_session";
-    
-    ?>>
+<body
+    <?php
+    session_start();
+        if(isset($_GET['colour']))
+        {
+            $colour = $_GET['colour'];
+            $_SESSION['colour']= $colour;
+        }
+        @$colour_session = $_SESSION['colour'];
+        
+        echo "bgcolor=$colour_session";
+        
+        ?>
+        >
+
+
 <h1> Welcome to Chess Academy </h1>
+<div class="reward">
+<a href="tutorial.php"> <h3> Collect Coins and Go Back </h3> </a> 
+</div>
+
+<div id= "coins" >
+            <div class="coin"><i class="fas fa-coins fa-3x"></i></div>
+            <div class="coin">Coins</div>
+            <div class="coin" id="co">
+                 <?php
+    session_start();
+            
+    if (isset($_SESSION['username'])){
+    
+    $count=1;
+    $user = $_SESSION["username"];
+    $sel_query="Select coin from user where username = '$user'";
+    $result = mysqli_query($con,$sel_query);
+    while($row = mysqli_fetch_assoc($result)) { ?>
+    <td align="center"><?php echo $row["coin"]; 
+   
+    
+    
+    ?></td>
+    
+
+     <?php $count++; }
+ }
+ ?>
+                
+            </div>
+        </div>
+ 
+<?php
+
+    isset($_SESSION['username']);
+    $sql = "UPDATE user SET coin = coin + 10 WHERE username = '$user'";
+    $r = mysqli_query($con,$sql);
+    while($row = mysqli_fetch_assoc($result)) { ?>
+    echo $row["coin"];
+    <?php $count++; }
+
+
+ ?>
+ 
+ <div class ="para"> <p> <h3> The Queen is arguably the second most chess piece on the board.  <br>
+It combines the movmement of the rook and the bishop to move an infite number of spaces up, down, left, right, or diagonally.  <br>
+It can attack any piece inside its movement range. <br>
+TIP: Your queen can often best be used offensively but make sure to not use it recklessly. Losing your queen early on can spell trouble later. </h3> </p></div>
+
 <div id="game">
 <div class='cellprefix'>8</div>
 <div class='gamecell' id='1_8'></div>
@@ -490,189 +586,55 @@ session_start();
 <div class='gamecell grey' id='7_1'></div>
 <div class='gamecell' id='8_1'></div>
 <div class='cellprefix'></div>
-<div class='cellprefix'>A</div>
-<div class='cellprefix'>B</div>
-<div class='cellprefix'>C</div>
-<div class='cellprefix'>D</div>
-<div class='cellprefix'>E</div>
-<div class='cellprefix'>F</div>
-<div class='cellprefix'>G</div>
-<div class='cellprefix'>H</div>
+<div class='cellprefix'>a</div>
+<div class='cellprefix'>b</div>
+<div class='cellprefix'>c</div>
+<div class='cellprefix'>d</div>
+<div class='cellprefix'>e</div>
+<div class='cellprefix'>f</div>
+<div class='cellprefix'>g</div>
+<div class='cellprefix'>h</div>
 <div id='turn'> It's Whites Turn!</div>
-</div>
-
-
-
-        
-        <div id= "coins" >
-            <div class="coin"><i class="fas fa-coins fa-3x"></i></div>
-            <div class="coin">Coins</div>
-            <div class="coin" id="co">
-    <?php
-    session_start();
-            
-    if (isset($_SESSION['username'])){
-    
-    $count=1;
-    $user = $_SESSION["username"];
-    $sel_query="Select coin from user where username = '$user'";
-    $result = mysqli_query($con,$sel_query);
-    while($row = mysqli_fetch_assoc($result)) { ?>
-    <td align="center"><?php echo $row["coin"]; 
-   
-    
-    
-    ?></td>
-    
-
-     <?php $count++; }
- }
- ?>
-                
-            </div>
-        </div>
-
 <div id="links">
-    <div id = "tutorial" onclick="tutorial.html">
-        <a href="tutorial.php">Tutorial</a>
+</div>
+<div id="links">
+    <div id = "tutorial" onclick="tutorial.php">
+        <a href="tutorial.php">Go Back</a>
     </div>
     
-    <div id = "shop">
-       <a href="shop.php">Shop</a>
-    </div>
-    
-    <div id = "quit">
-       <a href="index.php">Restart Game</a>
-    </div>
-    
-    <div id = "logout">
-       <a href="login.php">Log Out</a>
-    </div>
 </div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
 </script>
 <script type="text/javascript">
-let main = {
 
+let main = {
+    
   variables: {
     turn: 'w',
     selectedpiece: '',
     highlighted: [],
     pieces: {
-      w_king: {
-        position: '5_1',
-        img: '&#9812;',
-        captured: false,
-        moved: false,
-        type: 'w_king'
-        
-      },
-      w_queen: {
+    w_queen: {
         position: '4_1',
         img: '&#9813;',
         captured: false,
         moved: false,
         type: 'w_queen'
       },
-      w_bishop1: {
-        position: '3_1',
-        img: '&#9815;',
+      b_pawn3: {
+        position: '1_4',
+        img: '&#9823;',
+        captured: false,
+        type: 'b_pawn',
+        moved: false
+      },
+       b_knight2: {
+        position: '7_8',
+        img: '&#9822;',
         captured: false,
         moved: false,
-        type: 'w_bishop'
+        type: 'b_knight'
       },
-      w_bishop2: {
-        position: '6_1',
-        img: '&#9815;',
-        captured: false,
-        moved: false,
-        type: 'w_bishop'
-      },
-      w_knight1: {
-        position: '2_1',
-        img: '&#9816;',
-        captured: false,
-        moved: false,
-        type: 'w_knight'
-      },
-      w_knight2: {
-        position: '7_1',
-        img: '&#9816;',
-        captured: false,
-        moved: false,
-        type: 'w_knight'
-      },
-      w_rook1: {
-        position: '1_1',
-        img: '&#9814;',
-        captured: false,
-        moved: false,
-        type: 'w_rook'
-      },
-      w_rook2: {
-        position: '8_1',
-        img: '&#9814;',
-        captured: false,
-        moved: false,
-        type: 'w_rook'
-      },
-      w_pawn1: {
-        position: '1_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn2: {
-        position: '2_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn3: {
-        position: '3_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn4: {
-        position: '4_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn5: {
-        position: '5_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn6: {
-        position: '6_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn7: {
-        position: '7_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-      w_pawn8: {
-        position: '8_2',
-        img: '&#9817;',
-        captured: false,
-        type: 'w_pawn',
-        moved: false
-      },
-
       b_king: {
         position: '5_8',
         img: '&#9818;',
@@ -680,112 +642,6 @@ let main = {
         moved: false,
         type: 'b_king'
       },
-      b_queen: {
-        position: '4_8',
-        img: '&#9819;',
-        captured: false,
-        moved: false,
-        type: 'b_queen'
-      },
-      b_bishop1: {
-        position: '3_8',
-        img: '&#9821;',
-        captured: false,
-        moved: false,
-        type: 'b_bishop'
-      },
-      b_bishop2: {
-        position: '6_8',
-        img: '&#9821;',
-        captured: false,
-        moved: false,
-        type: 'b_bishop'
-      },
-      b_knight1: {
-        position: '2_8',
-        img: '&#9822;',
-        captured: false,
-        moved: false,
-        type: 'b_knight'
-      },
-      b_knight2: {
-        position: '7_8',
-        img: '&#9822;',
-        captured: false,
-        moved: false,
-        type: 'b_knight'
-      },
-      b_rook1: {
-        position: '1_8',
-        img: '&#9820;',
-        captured: false,
-        moved: false,
-        type: 'b_rook'
-      },
-      b_rook2: {
-        position: '8_8',
-        img: '&#9820;',
-        captured: false,
-        moved: false,
-        type: 'b_rook'
-      },
-      b_pawn1: {
-        position: '1_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn2: {
-        position: '2_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn3: {
-        position: '3_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn4: {
-        position: '4_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn5: {
-        position: '5_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn6: {
-        position: '6_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn7: {
-        position: '7_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      },
-      b_pawn8: {
-        position: '8_7',
-        img: '&#9823;',
-        captured: false,
-        type: 'b_pawn',
-        moved: false
-      }
-
     }
   },
 
@@ -1195,7 +1051,6 @@ let main = {
         main.variables.pieces[selectedpiece.name].moved = true;
         // captured piece
         main.variables.pieces[target.name].captured = true;
-        
         /*
         // toggle highlighted coordinates
         main.methods.togglehighlight(main.variables.highlighted);
@@ -1231,7 +1086,7 @@ let main = {
     endturn: function(){
 
       if (main.variables.turn == 'w') {
-        main.variables.turn = 'b';
+       
         
         // toggle highlighted coordinates ?? Posible guidance path section
         main.methods.togglehighlight(main.variables.highlighted);
@@ -1239,7 +1094,7 @@ let main = {
         // set the selected piece to '' again
         main.variables.selectedpiece = '';
 
-        $('#turn').html("It's Blacks Turn");
+     
 
         $('#turn').addClass('turnhighlight');
         window.setTimeout(function(){
@@ -1263,6 +1118,7 @@ let main = {
         }, 1500);
 
       }
+
     },
 
     togglehighlight: function(options) {
@@ -1272,7 +1128,6 @@ let main = {
     },
 
   }
-  
 };
 
 $(document).ready(function() {
@@ -1393,20 +1248,6 @@ $(document).ready(function() {
       main.methods.moveoptions(target.name);
 
     }
-    
-    if (main.variables.pieces['b_king'].captured == true){
-		alert('Game Over! White Wins');
-		if (true){
-		    
-		}
-		
-	
-		}
-		else if (main.variables.pieces['w_king'].captured == true){
-		alert('Game Over! Black Wins');
-		}
-		
-		
 
   });
 
