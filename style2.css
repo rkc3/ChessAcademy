@@ -1,0 +1,13 @@
+h1{
+    background: rgba(3, 171, 151, 0.3);
+    margin-top: 0;
+    padding: 5px;
+    width: 500px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#coins{
+    margin-top: -39px;
+}
+
